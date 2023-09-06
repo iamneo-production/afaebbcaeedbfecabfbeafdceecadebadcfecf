@@ -29,7 +29,9 @@ export class UserRegistrationComponent {
       console.log(this.registrationForm.value);
     } else {
       // Form is invalid, display error messages
-      this.validateFormFields(this.registrationForm);
+     this.validateFormFields(this.async (params: type): void => {
+         registrationForm;
+       });
     }
   }
 
