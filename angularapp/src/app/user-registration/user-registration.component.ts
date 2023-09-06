@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-registration',
-  templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css']
+  selector: 'app-user-registration',
+  templateUrl: './user-registration.component.html',
+  styleUrls: ['./user-registration.component.css']
 })
-export class RegistrationComponent {
-  registrationForm: FormGroup;
+export class UserRegistrationComponent {
+   registrationForm: FormGroup | undefined;
 
   constructor(private fb: FormBuilder) {
     this.createForm();
@@ -15,33 +15,34 @@ export class RegistrationComponent {
 
   createForm() {
     this.registrationForm = this.fb.group({
-      inputFirstname: ['', [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(50),
-        Validators.pattern(/^[a-zA-Z ]*$/)
-      ]],
-      gender: ['', Validators.required],
-      country: ['', Validators.required],
-      city: ['', Validators.required],
-      inputAge: [''],
-    });
-
-    // Set age validator based on selected country
-    this.registrationForm.get('country').valueChanges.subscribe(country => {
-      if (['US', 'Canada', 'India'].includes(country)) {
-        this.registrationForm.get('inputAge').setValidators(Validators.required);
-      } else {
-        this.registrationForm.get('inputAge').clearValidators();
-      }
-      this.registrationForm.get('inputAge').updateValueAndValidity();
+      firstName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern('^[a-zA-Z]+$')]],
+      gender: new FormControl('', [Validators.required]),
+      country: new FormControl('', [Validators.required]),
+      city: new FormControl('', [Validators.required]),
+      age: new FormControl('', [])
     });
   }
 
   onSubmit() {
     if (this.registrationForm.valid) {
-      // Handle form submission
+      // Form is valid, you can submit the data
       console.log(this.registrationForm.value);
+    } else {
+      // Form is invalid, display error messages
+      this.validateFormFields(this.registrationForm);
     }
   }
+
+  validateFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+
+      if (control instanceof FormControl) {
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {
+        this.validateFormFields(control);
+      }
+    });
+  }
 }
+
