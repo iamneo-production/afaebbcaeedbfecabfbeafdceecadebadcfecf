@@ -1,60 +1,37 @@
-<p>user-registration works!</p>
-<div>
-    <h2>User Registration</h2>
-    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
-      <div>
-        <label for="inputFirstname">First Name:</label>
-        <input type="text" id="inputFirstname" formControlName="firstName">
-        <div id="errorFirstName" *ngIf="registrationForm.get('firstName').hasError('required')">
-          First Name is required.
-        </div>
-        <div id="errorFirstName" *ngIf="registrationForm.get('firstName').hasError('minlength')">
-          First Name must be at least 3 characters long.
-        </div>
-        <div id="errorFirstName" *ngIf="registrationForm.get('firstName').hasError('maxlength')">
-          First Name cannot exceed 50 characters.
-        </div>
-        <div id="errorFirstName" *ngIf="registrationForm.get('firstName').hasError('pattern')">
-          First Name can only contain alphabets.
-        </div>
-      </div>
-      <div>
-        <label>Gender:</label>
-        <input type="checkbox" id="gender" formControlName="gender">
-        <div id="errorGender" *ngIf="registrationForm.get('gender').hasError('required')">
-          Gender is required.
-        </div>
-      </div>
-      <div>
-        <label for="country">Country of Origin:</label>
-        <select id="country" formControlName="country">
-          <option value="" disabled>Select Country</option>
-          <option value="US">US</option>
-          <option value="Canada">Canada</option>
-          <option value="India">India</option>
-          <!-- Add other countries here -->
-        </select>
-        <div id="errorCountry" *ngIf="registrationForm.get('country').hasError('required')">
-          Country is required.
-        </div>
-      </div>
-      <div>
-        <label for="city">City of Origin:</label>
-        <input type="text" id="city" formControlName="city">
-        <div id="errorCity" *ngIf="registrationForm.get('city').hasError('required')">
-          City is required.
-        </div>
-      </div>
-      <div>
-        <label for="inputAge">Age:</label>
-        <input type="number" id="inputAge" formControlName="age">
-        <div id="errorAge" *ngIf="registrationForm.get('age').hasError('required')">
-          Age is required for selected countries (US, Canada, India).
-        </div>
-      </div>
-      <div>
-        <button type="submit" id="submit">Submit</button>
-      </div>
-    </form>
+<form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="inputFirstname">First Name:</label>
+    <input type="text" id="inputFirstname" formControlName="inputFirstname">
+    <div id="errorFirstName" *ngIf="registrationForm.get('inputFirstname').hasError('required')">First Name is required.</div>
+    <div id="errorFirstName" *ngIf="registrationForm.get('inputFirstname').hasError('minlength')">First Name must be at least 3 characters.</div>
+    <div id="errorFirstName" *ngIf="registrationForm.get('inputFirstname').hasError('maxlength')">First Name cannot exceed 50 characters.</div>
+    <div id="errorFirstName" *ngIf="registrationForm.get('inputFirstname').hasError('pattern')">First Name can only contain alphabets and spaces.</div>
   </div>
-  
+  <div>
+    <label>Gender:</label>
+    <input type="checkbox" id="gender" formControlName="gender">
+    <div id="errorGender" *ngIf="registrationForm.get('gender').hasError('required')">Gender is required.</div>
+  </div>
+  <div>
+    <label for="country">Country of Origin:</label>
+    <select id="country" formControlName="country">
+      <option value="">Select a country</option>
+      <option value="US">US</option>
+      <option value="Canada">Canada</option>
+      <option value="India">India</option>
+      <!-- Add more countries as needed -->
+    </select>
+    <div id="errorCountry" *ngIf="registrationForm.get('country').hasError('required')">Country is required.</div>
+  </div>
+  <div>
+    <label for="city">City of Origin:</label>
+    <input type="text" id="city" formControlName="city">
+    <div id="errorCity" *ngIf="registrationForm.get('city').hasError('required')">City is required.</div>
+  </div>
+  <div>
+    <label for="inputAge">Age:</label>
+    <input type="number" id="inputAge" formControlName="inputAge">
+    <div id="errorAge" *ngIf="registrationForm.get('inputAge').hasError('required')">Age is required for selected countries (US, Canada, India).</div>
+  </div>
+  <button type="submit" id="submit">Submit</button>
+</form>
