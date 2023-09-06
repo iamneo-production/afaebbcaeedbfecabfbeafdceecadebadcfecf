@@ -30,7 +30,7 @@ export class UserRegistrationComponent {
     } else {
       // Form is invalid, display error messages
      this.validateFormFields(this.async (params: type): void => {
-         registrationForm;
+         registrationForm':
        });
     }
   }
