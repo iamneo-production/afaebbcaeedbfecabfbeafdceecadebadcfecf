@@ -1,50 +1,53 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user-registration',
   templateUrl: './user-registration.component.html',
-  styleUrls: ['./user-registration.component.css']
+  styleUrls: ['./user-registration.component.css'],
 })
-export class UserRegistrationComponent {
-   registrationForm: FormGroup | undefined;
+export class UserRegistrationComponent implements OnInit {
+  registrationForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
-    this.createForm();
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.registrationForm = this.fb.group({
+      firstName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+          Validators.pattern(/^[a-zA-Z ]+$/),
+        ],
+      ],
+      gender: ['', Validators.required],
+      country: ['', Validators.required],
+      city: ['', Validators.required],
+      age: [
+        '',
+        (control) => {
+          if (this.isAgeRequired()) {
+            return Validators.required(control);
+          } else {
+            return null;
+          }
+        },
+      ],
+    });
   }
 
-  createForm() {
-    this.registrationForm = this.fb.group({
-      firstName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern('^[a-zA-Z]+$')]],
-      gender: new FormControl('', [Validators.required]),
-      country: new FormControl('', [Validators.required]),
-      city: new FormControl('', [Validators.required]),
-      age: new FormControl('', [])
-    });
+  isAgeRequired(): boolean {
+    const selectedCountry = this.registrationForm.get('country').value;
+    return ['US', 'Canada', 'India'].includes(selectedCountry);
   }
 
   onSubmit() {
     if (this.registrationForm.valid) {
-      // Form is valid, you can submit the data
+      // Handle form submission here
       console.log(this.registrationForm.value);
-    } else {
-      // Form is invalid, display error messages
-     this.validateFormFields(this.async (params: type): void => {
-         registrationForm':
-       });
     }
-  }
-
-  validateFormFields(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach(field => {
-      const control = formGroup.get(field);
-
-      if (control instanceof FormControl) {
-        control.markAsTouched({ onlySelf: true });
-      } else if (control instanceof FormGroup) {
-        this.validateFormFields(control);
-      }
-    });
   }
 }
 

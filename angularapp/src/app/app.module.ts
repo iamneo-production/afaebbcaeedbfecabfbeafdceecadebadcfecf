@@ -20,3 +20,11 @@ import { UserRegistrationComponent } from './user-registration/user-registration
 })
 export class AppModule { }
 
+import { ReactiveFormsModule } from '@angular/forms';
+
+@NgModule({
+  declarations: [/* ... */],
+  imports: [ReactiveFormsModule, /* ... */],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
